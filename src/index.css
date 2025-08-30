@@ -11,8 +11,11 @@ All colors MUST be HSL. Rich coffee-themed palette with warm tones.
     /* Coffee Brand Colors */
     --coffee-900: 22 44% 13%;      /* #2C1B14 - Darkest coffee */
     --coffee-700: 18 37% 21%;      /* #4A2E23 - Dark coffee */
+    --coffee-600: 18 30% 30%;      /* Medium-dark coffee */
     --coffee-500: 18 40% 40%;      /* #8B5E3C - Medium coffee */
     --coffee-300: 25 35% 60%;      /* Lighter coffee tone */
+    --coffee-200: 25 25% 75%;      /* Light coffee tone */
+    --coffee-50: 30 30% 93%;       /* Very light coffee/cream tone */
     --cream-100: 36 45% 95%;       /* #F7F3EE - Cream background */
     --cream-50: 36 60% 98%;        /* Ultra light cream */
     --accent-500: 30 48% 65%;      /* #D4A574 - Golden accent */

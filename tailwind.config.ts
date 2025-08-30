@@ -27,8 +27,11 @@ export default {
 				coffee: {
 					900: 'hsl(var(--coffee-900))',
 					700: 'hsl(var(--coffee-700))',
+					600: 'hsl(var(--coffee-600))',
 					500: 'hsl(var(--coffee-500))',
 					300: 'hsl(var(--coffee-300))',
+					200: 'hsl(var(--coffee-200))',
+					50: 'hsl(var(--coffee-50))',
 				},
 				cream: {
 					100: 'hsl(var(--cream-100))',
