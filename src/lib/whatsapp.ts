@@ -1,56 +1,68 @@
-// WhatsApp integration utilities for hi_coffee_97km
+// WhatsApp integration utilities
+const WHATSAPP_NUMBER = "+6285600291862";
+const BRAND_HANDLE = "@Hi_coffee_97km";
 
-const WHATSAPP_NUMBER = process.env.WHATSAPP_NUMBER || "";
-
-export interface WhatsAppMessage {
-  productName?: string;
-  price?: number;
-  customMessage?: string;
+export interface OrderMessageParams {
+  productName: string;
+  variant?: string;
+  quantity?: number;
+  note?: string;
 }
 
-export const formatPrice = (price: number): string => {
-  return new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    minimumFractionDigits: 0,
-  }).format(price);
-};
+export interface WhatsAppLinkParams {
+  number?: string;
+  message: string;
+}
 
-export const buildWhatsAppURL = ({
-  productName,
-  price,
-  customMessage,
-}: WhatsAppMessage = {}): string => {
-  let message = "";
-
-  if (customMessage) {
-    message = customMessage;
-  } else if (productName && price) {
-    message = `Halo hi_coffee_97km, saya mau pesan:\n\n${productName}\nHarga: ${formatPrice(price)}\n\nTerima kasih!`;
-  } else {
-    message = "Halo hi_coffee_97km, saya mau pesan kopi.";
-  }
-
+/**
+ * Build WhatsApp link with encoded message
+ */
+export const buildWaLink = ({ 
+  number = WHATSAPP_NUMBER, 
+  message 
+}: WhatsAppLinkParams): string => {
   const encodedMessage = encodeURIComponent(message);
-  
-  // If WHATSAPP_NUMBER is available, use it. Otherwise, use wa.me without number for now
-  if (WHATSAPP_NUMBER) {
-    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
-  }
-  
-  return `https://wa.me/?text=${encodedMessage}`;
+  return `https://wa.me/${number}?text=${encodedMessage}`;
 };
 
-export const openWhatsApp = (messageConfig?: WhatsAppMessage): void => {
-  const url = buildWhatsAppURL(messageConfig);
-  window.open(url, "_blank");
+/**
+ * Build formatted order message for WhatsApp
+ */
+export const buildOrderMessage = ({
+  productName,
+  variant = "",
+  quantity = 1,
+  note = "-"
+}: OrderMessageParams): string => {
+  const message = [
+    "Halo hi_coffee_97km, saya ingin pesan:",
+    "",
+    `- Produk: ${productName}`,
+    variant ? `- Varian: ${variant}` : null,
+    `- Qty: ${quantity}`,
+    `Catatan: ${note}`,
+    "",
+    "Sumber: Landing hi_coffee_97km"
+  ].filter(Boolean).join("\n");
+  
+  return message;
 };
 
-// Predefined message templates
-export const WHATSAPP_TEMPLATES = {
-  generalInquiry: "Halo hi_coffee_97km, saya mau tanya tentang produk kopi Anda.",
-  orderInquiry: "Halo hi_coffee_97km, saya mau pesan kopi.",
-  customOrder: "Halo hi_coffee_97km, saya mau tanya tentang custom order.",
-  sameDayDelivery: "Halo hi_coffee_97km, saya mau pesan kopi. Siap kirim hari ini?",
-  consultation: "Halo hi_coffee_97km, saya mau konsultasi tentang pilihan kopi yang cocok untuk saya.",
-} as const;
+/**
+ * Open WhatsApp with pre-filled message
+ */
+export const openWhatsApp = (message: string) => {
+  const link = buildWaLink({ message });
+  window.open(link, "_blank");
+};
+
+/**
+ * Open WhatsApp for product order
+ */
+export const openWhatsAppOrder = (params: OrderMessageParams) => {
+  const message = buildOrderMessage(params);
+  openWhatsApp(message);
+};
+
+// Export constants for use in components
+export { WHATSAPP_NUMBER, BRAND_HANDLE };

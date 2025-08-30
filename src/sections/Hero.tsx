@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Coffee, ArrowDown } from "lucide-react";
+import { openWhatsApp } from "@/lib/whatsapp";
 import heroCoffeeImage from "@/assets/hero-coffee.jpg";
 
 const Hero = () => {
@@ -7,8 +8,8 @@ const Hero = () => {
     document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const openWhatsApp = () => {
-    window.open("https://wa.me/?text=Halo%20hi_coffee_97km,%20saya%20mau%20pesan%20kopi.", "_blank");
+  const handleWhatsAppOrder = () => {
+    openWhatsApp("Halo hi_coffee_97km, saya mau pesan kopi.");
   };
 
   return (
@@ -37,7 +38,7 @@ const Hero = () => {
               <Button
                 variant="hero"
                 size="xl"
-                onClick={openWhatsApp}
+                onClick={handleWhatsAppOrder}
                 className="animate-stagger-1"
               >
                 <Coffee className="mr-2 h-5 w-5" />

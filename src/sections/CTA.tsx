@@ -1,11 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { MessageCircle, Clock, Truck } from "lucide-react";
+import { openWhatsApp, BRAND_HANDLE } from "@/lib/whatsapp";
 
 const CTA = () => {
-  const openWhatsApp = () => {
-    const message = "Halo hi_coffee_97km, saya mau pesan kopi. Siap kirim hari ini?";
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/?text=${encodedMessage}`, "_blank");
+  const handleWhatsAppClick = () => {
+    openWhatsApp("Halo, saya mau tanya ketersediaan produk. DLL → Tanya kami langsung.");
   };
 
   return (
@@ -69,16 +68,22 @@ const CTA = () => {
             <Button
               variant="secondary"
               size="xl"
-              onClick={openWhatsApp}
+              onClick={handleWhatsAppClick}
               className="bg-accent-brand-500 text-coffee-900 hover:bg-accent-brand-600 transform hover:scale-105 transition-bounce text-lg font-semibold px-12 py-4 h-auto"
+              aria-label="Chat via WhatsApp untuk konsultasi produk"
             >
               <MessageCircle className="mr-3 h-6 w-6" />
               Chat via WhatsApp Sekarang
             </Button>
             
-            <p className="mt-4 text-cream-100/70 text-sm">
-              * Gratis konsultasi dan rekomendasi kopi sesuai selera Anda
-            </p>
+            <div className="mt-4 space-y-2">
+              <p className="text-cream-100/70 text-sm">
+                * Gratis konsultasi dan rekomendasi kopi sesuai selera Anda
+              </p>
+              <p className="text-cream-100/60 text-xs">
+                Follow kami di {BRAND_HANDLE}
+              </p>
+            </div>
           </div>
         </div>
       </div>
